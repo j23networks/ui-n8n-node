@@ -1,0 +1,66 @@
+{
+  "name": "n8n-nodes-unifi",
+  "version": "0.1.0",
+  "description": "n8n community node for Ubiquiti UniFi (switches & network). Targets the official UniFi Network API and transparently falls back to the legacy controller API for capabilities the official API does not expose.",
+  "keywords": [
+    "n8n-community-node-package",
+    "unifi",
+    "ubiquiti",
+    "network",
+    "switch",
+    "poe"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/j23networks/ui-n8n-node",
+  "author": {
+    "name": "John McGovern",
+    "email": "john.mcgovern@sentinelone.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j23networks/ui-n8n-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/j23networks/ui-n8n-node/issues"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=18.10"
+  },
+  "scripts": {
+    "build": "tsc && npm run copy:assets",
+    "copy:assets": "for d in nodes/*/; do mkdir -p \"dist/$d\" && cp \"$d\"*.svg \"dist/$d\" 2>/dev/null || true; done",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "format": "prettier nodes credentials --write",
+    "prepublishOnly": "npm run build && npm run lint"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/UniFiApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/UniFi/UniFi.node.js",
+      "dist/nodes/UniFiTrigger/UniFiTrigger.node.js",
+      "dist/nodes/UniFiProtect/UniFiProtect.node.js",
+      "dist/nodes/UniFiProtectTrigger/UniFiProtectTrigger.node.js"
+    ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "n8n-workflow": "^1.55.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.4.0"
+  }
+}

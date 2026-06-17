@@ -1,0 +1,14 @@
+# Source — only the compiled dist/ is published (see "files" in package.json)
+nodes/
+credentials/
+*.ts
+tsconfig.json
+.eslintrc.js
+.prettierrc.json
+.editorconfig
+
+# Tooling & misc
+.github/
+.vscode/
+*.log
+.DS_Store
