@@ -12,29 +12,35 @@ module.exports = {
 	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
-		project: ['./tsconfig.json'],
 		sourceType: 'module',
-		extraFileExtensions: ['.json'],
 	},
 	ignorePatterns: ['.eslintrc.js', '**/*.js', 'node_modules/**', 'dist/**'],
 	overrides: [
 		{
-			files: ['package.json'],
-			plugins: ['eslint-plugin-n8n-nodes-base'],
-			extends: ['plugin:n8n-nodes-base/community'],
-			rules: {
-				'n8n-nodes-base/community-package-json-name-still-default': 'off',
-			},
-		},
-		{
 			files: ['./credentials/**/*.ts'],
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/credentials'],
+			rules: {
+				// This rule wants documentationUrl camelCased and, per its own docs, is
+				// "Only applicable to nodes in the main repository." For a community
+				// package documentationUrl must be a full HTTP URL (enforced by the
+				// -not-http-url rule), so the camelCase rule is disabled here.
+				'n8n-nodes-base/cred-class-field-documentation-url-miscased': 'off',
+			},
 		},
 		{
 			files: ['./nodes/**/*.ts'],
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/nodes'],
+			rules: {
+				// These rules statically introspect the `options` arrays of resource/
+				// operation params. Our params are registry-generated and spread into
+				// the arrays (e.g. ...GENERIC_RESOURCE_OPTIONS), which the rules cannot
+				// parse — they throw on the spread elements. Disabled for this package.
+				'n8n-nodes-base/node-param-resource-with-plural-option': 'off',
+				'n8n-nodes-base/node-param-operation-without-no-data-expression': 'off',
+				'n8n-nodes-base/node-param-options-type-unsorted-items': 'off',
+			},
 		},
 	],
 };

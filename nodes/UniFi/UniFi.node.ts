@@ -8,7 +8,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
+import { NodeOperationError } from 'n8n-workflow';
 
 import { properties } from './properties';
 import { GENERIC_RESOURCE_VALUES, handleGenericResource } from './genericResources';
@@ -32,8 +32,8 @@ export class UniFi implements INodeType {
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Read and control Ubiquiti UniFi switches and networks',
 		defaults: { name: 'UniFi' },
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [{ name: 'unifiApi', required: true }],
 		properties,
 	};

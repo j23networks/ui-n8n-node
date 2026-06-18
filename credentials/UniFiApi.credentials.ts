@@ -23,7 +23,7 @@ export class UniFiApi implements ICredentialType {
 
 	displayName = 'UniFi API';
 
-	documentationUrl = 'https://developer.ui.com';
+	documentationUrl = 'https://github.com/j23networks/n8n-nodes-unifi';
 
 	properties: INodeProperties[] = [
 		{

@@ -1,6 +1,7 @@
 # Dependencies & build output
 node_modules/
 dist/
+package-lock.json
 
 # Local env / secrets (not used by the node itself — defensive only)
 .env

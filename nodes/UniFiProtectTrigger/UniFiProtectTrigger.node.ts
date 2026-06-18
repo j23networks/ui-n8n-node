@@ -5,7 +5,6 @@ import type {
 	IWebhookFunctions,
 	IWebhookResponseData,
 } from 'n8n-workflow';
-import { NodeConnectionType } from 'n8n-workflow';
 
 /**
  * UniFi Protect Alarm Manager can POST (or GET) a webhook when an alarm fires.
@@ -35,7 +34,7 @@ export class UniFiProtectTrigger implements INodeType {
 		description: 'Starts a workflow from a UniFi Protect alarm webhook',
 		defaults: { name: 'UniFi Protect Trigger' },
 		inputs: [],
-		outputs: [NodeConnectionType.Main],
+		outputs: ['main'],
 		webhooks: [
 			{
 				name: 'default',

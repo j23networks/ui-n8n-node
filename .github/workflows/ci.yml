@@ -32,12 +32,8 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      # Advisory for now: eslint-plugin-n8n-nodes-base is strict (option ordering,
-      # display-name casing, etc.). Run `npm run lintfix` locally, commit the
-      # result, then remove continue-on-error to make lint a hard gate.
       - name: Lint
         run: npm run lint
-        continue-on-error: true
 
       - name: Build
         run: npm run build

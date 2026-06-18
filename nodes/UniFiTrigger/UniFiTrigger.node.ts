@@ -7,7 +7,6 @@ import type {
 	INodeTypeDescription,
 	IPollFunctions,
 } from 'n8n-workflow';
-import { NodeConnectionType } from 'n8n-workflow';
 
 import { unifiApiRequest, unifiApiRequestAllItems } from '../UniFi/transport';
 
@@ -31,7 +30,7 @@ export class UniFiTrigger implements INodeType {
 		defaults: { name: 'UniFi Trigger' },
 		polling: true,
 		inputs: [],
-		outputs: [NodeConnectionType.Main],
+		outputs: ['main'],
 		credentials: [{ name: 'unifiApi', required: true }],
 		properties: [
 			{
@@ -41,7 +40,7 @@ export class UniFiTrigger implements INodeType {
 				typeOptions: { loadOptionsMethod: 'getSites' },
 				default: '',
 				required: true,
-				description: 'Choose from the list, or specify an ID using an expression',
+				description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 			},
 			{
 				displayName: 'Event',
@@ -83,8 +82,7 @@ export class UniFiTrigger implements INodeType {
 				typeOptions: { loadOptionsMethod: 'getDevices', loadOptionsDependsOn: ['siteId'] },
 				default: '',
 				displayOptions: { show: { event: ['portLinkChanged', 'poeFault'] } },
-				description:
-					'Limit polling to a single switch (recommended). Leave empty to scan all devices. Choose from the list, or specify an ID by expression.',
+				description: 'Limit polling to a single switch (recommended). Leave empty to scan all devices. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
 		],
 	};

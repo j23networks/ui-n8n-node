@@ -6,7 +6,6 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionType } from 'n8n-workflow';
 
 import { unifiProtectRequestAllItems } from '../UniFi/transport';
 import {
@@ -26,8 +25,8 @@ export class UniFiProtect implements INodeType {
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Control UniFi Protect cameras, sensors, sirens, lights and more',
 		defaults: { name: 'UniFi Protect' },
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [{ name: 'unifiApi', required: true }],
 		properties: [
 			{

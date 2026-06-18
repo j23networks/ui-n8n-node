@@ -22,8 +22,7 @@ const siteField: INodeProperties = {
 	// Hidden for the handful of resources that live under /v1 directly (not per-site),
 	// and for the Custom resource where the user supplies the full path.
 	displayOptions: { hide: { resource: [...NON_SITE_SCOPED, 'custom'] } },
-	description:
-		'The UniFi site to operate on. Choose from the list, or specify an ID using an expression.',
+	description: 'The UniFi site to operate on. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 };
 
 const deviceField: INodeProperties = {
@@ -33,7 +32,7 @@ const deviceField: INodeProperties = {
 	typeOptions: { loadOptionsMethod: 'getDevices', loadOptionsDependsOn: ['siteId'] },
 	default: '',
 	required: true,
-	description: 'The switch/device to operate on. Choose from the list, or specify an ID by expression.',
+	description: 'The switch/device to operate on. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 };
 
 export const properties: INodeProperties[] = [
@@ -110,13 +109,13 @@ export const properties: INodeProperties[] = [
 			{
 				name: 'Power Cycle PoE',
 				value: 'powerCyclePoe',
-				action: 'Power cycle PoE on a port',
+				action: 'Power cycle a port',
 				description: 'Official API',
 			},
 			{
 				name: 'Set PoE Mode',
 				value: 'setPoeMode',
-				action: 'Set PoE mode on a port',
+				action: 'Set the power mode on a port',
 				description: 'Needs local account',
 			},
 			{
@@ -304,7 +303,7 @@ export const properties: INodeProperties[] = [
 		default: '',
 		required: true,
 		displayOptions: { show: { resource: ['network'], operation: ['get', 'update', 'delete'] } },
-		description: 'Choose from the list, or specify an ID using an expression',
+		description: 'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 	},
 	// Network body (create/update)
 	{
