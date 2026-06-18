@@ -23,11 +23,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Uses `npm install` so CI works before a package-lock.json is committed.
-      # Once you commit a lockfile, switch this to `npm ci` and add
-      # `cache: npm` to the setup-node step above for faster, reproducible runs.
+      # --ignore-scripts skips native postinstall builds. n8n-workflow pulls in
+      # isolated-vm (its runtime expression sandbox), which needs Node >=22 and a
+      # C++ toolchain — irrelevant here, since we only compile against
+      # n8n-workflow's type declarations. Skipping it avoids the native build.
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm install --ignore-scripts --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
