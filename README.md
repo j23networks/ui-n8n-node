@@ -153,6 +153,39 @@ mkdir -p ~/.n8n/custom && ln -s "$PWD" ~/.n8n/custom/n8n-nodes-unifi
 # restart n8n
 ```
 
+## Running in Docker
+
+Community nodes don't need to be "verified" to run — self-hosted n8n loads any
+package you point it at (`N8N_COMMUNITY_PACKAGES_ENABLED=true`, the default). Two
+ways to run this one, both included in the repo.
+
+**Option B — mount the built package (fast dev loop):**
+
+```bash
+npm install && npm run build      # produces dist/
+docker compose up                 # uses docker-compose.yml
+```
+
+The repo is mounted read-only at `/opt/n8n-nodes` and exposed via
+`N8N_CUSTOM_EXTENSIONS`; n8n reads `package.json`'s `n8n` field and loads the
+compiled nodes from `dist/`. Rebuild + `docker compose restart` to pick up
+changes (n8n only loads nodes at startup).
+
+**Option A — bake into a custom image (reproducible deploys):**
+
+```bash
+docker build -t n8n-unifi .       # multi-stage: compiles the package, then installs it
+docker run -it --rm -p 5678:5678 -v n8n_data:/home/node/.n8n n8n-unifi
+```
+
+The `Dockerfile` installs the package to `/opt/n8n-nodes` (outside `~/.n8n`) so a
+persisted data volume can't shadow it. You can also switch `docker-compose.yml`
+to this image by uncommenting `build: .`.
+
+> Both require a successful `npm run build` first. The container runs as user
+> `node` (uid 1000) — ensure mounted files are readable by it. Restart the
+> container after installing/mounting, since nodes load at startup.
+
 ## Lint & publish
 
 ```bash

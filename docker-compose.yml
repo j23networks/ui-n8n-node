@@ -1,0 +1,31 @@
+# Two ways to run, controlled by the image/build lines below.
+#
+#   Option B (default) — fast dev loop: mount the locally BUILT package.
+#     Run `npm install && npm run build` first, then `docker compose up`.
+#     Rebuild + `docker compose restart` to pick up code changes.
+#
+#   Option A — baked image: comment out the `image:` line and uncomment
+#     `build: .` to build the package into the image via the Dockerfile.
+#     (Then N8N_CUSTOM_EXTENSIONS is already set inside the image; the
+#     ./:/opt/n8n-nodes mount and the env line below are not needed.)
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    # build: .
+    container_name: n8n-unifi
+    restart: unless-stopped
+    ports:
+      - '5678:5678'
+    environment:
+      - N8N_CUSTOM_EXTENSIONS=/opt/n8n-nodes
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
+      # - GENERIC_TIMEZONE=America/New_York
+    volumes:
+      - n8n_data:/home/node/.n8n
+      # Mount the BUILT package (repo root). n8n reads package.json's `n8n`
+      # field and loads the compiled nodes from dist/. Source TS is ignored.
+      - ./:/opt/n8n-nodes:ro
+
+volumes:
+  n8n_data:
